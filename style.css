@@ -50,8 +50,8 @@
 
 .canvas {
   display: grid;
-  grid-template-rows: repeat(10, 1fr);
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  grid-template-columns: repeat(20, 1fr);
   height: 300px;
   width: 300px;
   border: 1px solid black;
@@ -62,21 +62,21 @@
 }
 
 .color-1 {
-
+  background-color: red;
 }
 
 .color-2 {
-
+  background-color: green;
 }
 
 .color-3 {
-
+  background-color: rgba(0, 0, 255, 0.872);
 }
 
 .color-4 {
-
+  background-color: rgba(81, 7, 81, 0.894);
 }
 
 .color-5 {
-
+  background-color: white;
 }

@@ -15,7 +15,8 @@
  * To make the second one happen, the number to change
  * is the first argument to `repeat`, currently set at 10.
  */
-const gridWidth = 10;
+//following code is where canvas is set up (10x10, background color = background color of palette 5 (white))
+const gridWidth = 20;
 let count = 0;
 while (count <= gridWidth * gridWidth) {
   const canvas = document.querySelector('.canvas');
@@ -31,10 +32,13 @@ while (count <= gridWidth * gridWidth) {
 // THEN all the wiring.
 
 // Instead, it'll be easier if you go one action at a time!
-// So, add a query for the palette colors.
+// So, add a query selector for the palette colors.
+
 // THEN add an event listener function for what happens when one is clicked.
+
 // THEN wire those two together, so that when the palette elements are clicked,
 // the function runs.
+
 //
 // And proceed from there to getting the squares working.
 //
@@ -49,7 +53,20 @@ while (count <= gridWidth * gridWidth) {
 // Add queries for all your squares, palette colors, and brush here.
 // (Note the singular or plural used in that sentence!)
 
+//brush grabber(use .current-brush instead of .brush so we can more easily manipulate brush color later)
+let brush = document.querySelector(".current-brush");
 
+//palette grabber
+let palette = document.querySelectorAll(".palette div");
+
+//canvas grabber
+let canvasSquares = document.querySelectorAll(".canvas div");
+
+//tester for mousedown/mouseup eventListeners
+let app = document.querySelector(".app");
+
+//boolean for mousedown/mouseup eventListeners
+let isMouseDown = false;
 
 /****************************
  * EVENT LISTENER FUNCTIONS *
@@ -61,7 +78,49 @@ while (count <= gridWidth * gridWidth) {
 // run as event listeners (after the next step is set up) isn't a
 // bad idea for testing purposes.
 
+//brush eventListener
+brush.addEventListener("click", function(){
+    console.log("brush clicked!");//will print brush! when brush square is clicked (test)
+});
 
+//palette eventListener
+for(let i = 0; i < palette.length; i++){
+    palette[i].addEventListener("click", function(){
+    console.log(palette[i].classList);//will print classList for whatever palette square we click (test)
+    brush.classList.replace(brush.classList[1], palette[i].classList[1]);//brush.classList.replace(current color to change, newColor) brush.classList[1] (currently color-2) to palette[i] (currently color-1, color-2, etc. whichever [i] you are clicking (palette box))
+    
+  });
+}
+
+//canvas click/mouseenter/mouseup/mousedown eventListeners
+for(let i = 0; i < canvasSquares.length; i++){
+    canvasSquares[i].addEventListener("click", function(){
+    console.log(canvasSquares[i].classList);
+    isMouseDown = false;
+    canvasSquares[i].classList.replace(canvasSquares[i].classList[1], brush.classList[1])
+  });
+
+    canvasSquares[i].addEventListener("mouseenter", function(){
+      if(isMouseDown === true){
+        console.log(canvasSquares[i].classList);
+        canvasSquares[i].classList.replace(canvasSquares[i].classList[1], brush.classList[1]);
+    }
+  });
+}
+
+//mousedown checks if user left clicks and holds
+//mouseup checks for when user releases
+app.addEventListener("mousedown", function(){
+  console.log("mouse is down!");
+  isMouseDown = true;//here we are saying that if the mousedown is held return true
+  console.log(`isMouseDown: ` + isMouseDown);//test
+});
+
+app.addEventListener("mouseup", function(){
+  console.log("mouse is up!");
+  isMouseDown = false;
+  console.log(`isMouseDown: ` + isMouseDown);//test
+});
 
 /**************************
  * WIRING IT ALL TOGETHER *
